@@ -56,8 +56,18 @@ ApplicationWindow {
       Button {
         width: 85
         height: 60
-        text: modelData
         font.pixelSize: 20
+        text: modelData
+
+        background: Rectangle {
+          color: (modelData === "+" || modelData === "×" ||
+            modelData === "-" || modelData === "÷" ||
+            modelData === "=") ? "#ff9f0a" : "#d5cdcb"
+
+          // color: (modelData === "C" || modelData === "±" || modelData === "⌫" ||
+          //   modelData === "%") ? "#ff9f0a" : "#d5cdcb"
+        }
+
         onClicked: {
           switch (modelData) {
             case "C":
@@ -93,11 +103,12 @@ ApplicationWindow {
             default:
               if (displayText === "0") {
                 displayText = modelData
-              } else if (displayText[displayText.length - 1] === "+" ||
+              } else if ((modelData === "+" || modelData === "-" || modelData === "×" || modelData === "÷") &&
+                  (displayText[displayText.length - 1] === "+" ||
                   displayText[displayText.length - 1] === "-" ||
                   displayText[displayText.length - 1] === "×" ||
-                  displayText[displayText.length - 1] === "÷") {
-                    displayText = displayText.slice(0, -1) + modelData
+                  displayText[displayText.length - 1] === "÷")) {
+                displayText = displayText.slice(0, -1) + modelData
               } else {
                 displayText += modelData
               }
