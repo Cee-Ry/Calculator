@@ -13,6 +13,15 @@ ApplicationWindow {
   minimumWidth: 400
   minimumHeight: 600
 
+  function calculate(expression) {
+    var clean = expression
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+
+    return eval(clean)  // now safe-ish since you control the input
+  }
+
+  // ---------- main UI ----------
   Label {
     x: 0
     anchors.horizontalCenter: parent.horizontalCenter
@@ -119,14 +128,6 @@ ApplicationWindow {
     }
   }
 
-  function calculate(expression) {
-    // replace × and ÷ with * and /
-    var clean = expression
-        .replace(/×/g, "*")
-        .replace(/÷/g, "/")
-
-    return eval(clean)  // now safe-ish since you control the input
-}
 
 }
 
