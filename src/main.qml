@@ -13,10 +13,6 @@ ApplicationWindow {
   minimumWidth: 400
   minimumHeight: 600
 
-
-  property real displayText: 0
-  property string minimized: ""
-
   Label {
     x: 0
     anchors.horizontalCenter: parent.horizontalCenter
@@ -25,6 +21,10 @@ ApplicationWindow {
     text: "Calculator"
     color: "#89807e"
   }
+
+  property string displayText: "0"
+  property string minimized: ""
+  property double num1: 0 
 
   Label {
     x: 0
@@ -38,11 +38,11 @@ ApplicationWindow {
   }
 
   property var buttons: [
-    "C", "±", "%", "÷",
+    "C", "±", "⌫", "÷",
     "7", "8", "9", "×",
     "4", "5", "6", "-",
     "1", "2", "3", "+",
-    "0", ".", "00", "="
+    "0", ".", "%", "="
   ]
 
   Grid {
@@ -60,8 +60,62 @@ ApplicationWindow {
         height: 50
         text: modelData
         font.pixelSize: 20
-        onClicked: handleButtonClick(displayText += modelData)
+        onClicked: {
+          switch (modelData) {
+            case "C":
+              displayText = "0"
+              break
+
+            case "=":
+              try {
+                displayText = calculate(displayText).toString()
+              } catch (e) {
+                displayText = "Error"
+              }
+              break
+            
+            case "±":
+              if (displayText !== "0") {
+                if (displayText.startsWith("-")) {
+                  displayText = displayText.substring(1)
+                } else {
+                  displayText = "-" + displayText
+                }
+              }
+              break
+
+            case "⌫":
+              if (displayText.length > 1) {
+                displayText = displayText.slice(0, -1)
+              } else {
+                displayText = "0"
+              }
+              break
+
+            default:
+              if (displayText === "0") {
+                displayText = modelData
+              } else {
+                displayText += modelData
+              }
+
+              num1 = parseFloat(displayText)
+
+              break
+          }
+        }
       }
     }
   }
+
+  function calculate(expression) {
+    // replace × and ÷ with * and /
+    var clean = expression
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+
+    return eval(clean)  // now safe-ish since you control the input
 }
+
+}
+
