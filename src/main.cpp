@@ -5,6 +5,6 @@ int main(int argc, char *argv[]) {
   QGuiApplication app(argc, argv);
   QQmlApplicationEngine cal;
 
-  cal.load("src/main.qml");
+  cal.load(QUrl("qrc:/qt/qml/Calculator/src/main.qml"));
   return app.exec();
 }
