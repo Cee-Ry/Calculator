@@ -13,13 +13,9 @@ ApplicationWindow {
   minimumWidth: 400
   minimumHeight: 600
 
-  property var buttons: [
-    "C", "±", "%", "÷",
-    "7", "8", "9", "×",
-    "4", "5", "6", "-",
-    "1", "2", "3", "+",
-    "0", ".", "="
-  ]
+
+  property real displayText: 0
+  property string minimized: ""
 
   Label {
     x: 0
@@ -29,6 +25,25 @@ ApplicationWindow {
     text: "Calculator"
     color: "#89807e"
   }
+
+  Label {
+    x: 0
+    anchors.right: parent.right
+    anchors.rightMargin: 20
+    y: 225
+
+    text: displayText
+    color: "#ffffff"
+    font.pixelSize: 40
+  }
+
+  property var buttons: [
+    "C", "±", "%", "÷",
+    "7", "8", "9", "×",
+    "4", "5", "6", "-",
+    "1", "2", "3", "+",
+    "0", ".", "00", "="
+  ]
 
   Grid {
     columns: 4
@@ -44,6 +59,7 @@ ApplicationWindow {
         width: 85
         height: 50
         text: modelData
+        onClicked: handleButtonClick(displayText += modelData)
       }
     }
   }
