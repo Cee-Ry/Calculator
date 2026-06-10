@@ -59,6 +59,7 @@ ApplicationWindow {
         width: 85
         height: 50
         text: modelData
+        font.pixelSize: 20
         onClicked: handleButtonClick(displayText += modelData)
       }
     }
