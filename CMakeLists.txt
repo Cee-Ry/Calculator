@@ -4,6 +4,11 @@ project(Calculator)
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2)
+
+# add these to silence the warnings
+qt_policy(SET QTP0001 NEW)
+qt_policy(SET QTP0004 NEW)
+
 qt_add_executable(cal src/main.cpp)
 
 qt_add_qml_module(cal
