@@ -22,15 +22,13 @@ ApplicationWindow {
     color: "#89807e"
   }
 
-  property string displayText: "0"
-  property string minimized: ""
-  property double num1: 0 
+  property var displayText: "0"
 
   Label {
     x: 0
     anchors.right: parent.right
     anchors.rightMargin: 20
-    y: 225
+    y: 175
 
     text: displayText
     color: "#ffffff"
@@ -57,7 +55,7 @@ ApplicationWindow {
       model: buttons
       Button {
         width: 85
-        height: 50
+        height: 60
         text: modelData
         font.pixelSize: 20
         onClicked: {
@@ -95,12 +93,14 @@ ApplicationWindow {
             default:
               if (displayText === "0") {
                 displayText = modelData
+              } else if (displayText[displayText.length - 1] === "+" ||
+                  displayText[displayText.length - 1] === "-" ||
+                  displayText[displayText.length - 1] === "×" ||
+                  displayText[displayText.length - 1] === "÷") {
+                    displayText = displayText.slice(0, -1) + modelData
               } else {
                 displayText += modelData
               }
-
-              num1 = parseFloat(displayText)
-
               break
           }
         }
